@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Финансовый калькулятор</title>
+  <style>
+    :root {
+      --primary: #007bff;
+      --accent: #0056b3;
+      --background: linear-gradient(145deg, #e6f0ff, #f9f9f9);
+      --card-bg: #ffffffcc;
+      --border-radius: 14px;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: var(--background);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: var(--card-bg);
+      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow);
+      padding: 30px 24px;
+      margin: 20px;
+      max-width: 420px;
+      width: 100%;
+      border-radius: var(--border-radius);
+      border: 1px solid #d6eaff;
+    }
+
+    h2 {
+      text-align: center;
+      color: #003366;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: var(--border-radius);
+      margin-bottom: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: white;
+      background-color: var(--primary);
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--accent);
+    }
+
+    .result {
+      margin-top: 24px;
+    }
+
+    .card {
+      background-color: white;
+      border-left: 5px solid var(--primary);
+      border-radius: var(--border-radius);
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 1.05rem;
+      color: #222;
+    }
+
+    .emoji {
+      margin-right: 6px;
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      input, button {
+        font-size: 0.95rem;
+      }
+
+      .card p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📊 Финансовый калькулятор</h2>
+    <label for="amount">Введите сумму (₽):</label>
+    <input type="number" id="amount" placeholder="например, 100000" />
+
+    <button onclick="calculate()">Рассчитать</button>
+
+    <div class="result" id="output"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      const amount = parseFloat(document.getElementById("amount").value);
+      const output = document.getElementById("output");
+
+      if (isNaN(amount) || amount <= 0) {
+        output.innerHTML = "<p style='color:red;'>Введите корректную сумму.</p>";
+        return;
+      }
+
+      const you = amount * 0.025; // 2.5%
+      const tax = amount * 0.06; // 6%
+      const me = amount - you - tax;
+
+      output.innerHTML = `
+        <div class="card"><p><span class="emoji">💸</span>Тебе (2,5%): <strong>${you.toLocaleString('ru-RU', {maximumFractionDigits: 2})} ₽</strong></p></div>
+        <div class="card"><p><span class="emoji">💼</span>Налог 6%: <strong>${tax.toLocaleString('ru-RU', {maximumFractionDigits: 2})} ₽</strong></p></div>
+        <div class="card"><p><span class="emoji">🧮</span>Мне: <strong>${me.toLocaleString('ru-RU', {maximumFractionDigits: 2})} ₽</strong></p></div>
+      `;
+    }
+  </script>
+</body>
+</html>
