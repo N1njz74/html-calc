@@ -114,6 +114,7 @@ function Find-PCManager {
   $pf86 = ${env:ProgramFiles(x86)}
   if ($pf86) {
     $candidates += Join-Path $pf86 'HONOR\PCManager'
+    $candidates += Join-Path $pf86 'HONOR\HONOR PC Manager'
   }
 
   $installDir = $null
